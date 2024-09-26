@@ -3,87 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Popup</title>
+    <title>Welcome Animation</title>
     <style>
         body {
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             height: 100vh;
-            margin: 0;
-            background-color: #222;
-            font-family: 'Arial', sans-serif;
-            color: white;
-            overflow: hidden; /* Prevent scrollbars */
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
         }
-
         #welcome-message {
-            position: absolute;
-            top: 20%; /* Adjust for vertical positioning */
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 50px;
-            opacity: 0; /* Initially hidden */
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            z-index: 10;
-        }
-
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.5s;
         }
     </style>
 </head>
 <body>
-    <h1 id="welcome-message">Welcome!</h1>
-    <canvas id="confettiCanvas" width="500" height="500"></canvas>
-
+    <div id="welcome-message">Welcome, Guest!</div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
-        function randomColor() {
-            return 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.7)';
-        }
-
-        function drawConfetti() {
-            var canvas = document.getElementById('confettiCanvas');
-            var ctx = canvas.getContext('2d');
-            var x = Math.random() * canvas.width;
-            var y = Math.random() * canvas.height;
-            var size = Math.random() * 20 + 10;
-            ctx.fillStyle = randomColor();
-            ctx.fillRect(x, y, size, size);
-        }
-
-        function animateConfetti() {
-            var canvas = document.getElementById('confettiCanvas');
-            var ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (var i = 0; i < 100; i++) {
-                drawConfetti();
-            }
-            requestAnimationFrame(animateConfetti);
-        }
-
-        // Start the confetti animation
-        animateConfetti();
-
-        // Function to update the welcome message with animation
         function showWelcomeMessage(name) {
-            var messageElement = document.getElementById('welcome-message');
-            messageElement.innerText = 'Welcome, ' + name + '!';
-            messageElement.style.opacity = '1'; // Fade in
-            messageElement.style.transform = 'translate(-50%, 0)'; // Slide in from the top
-
-            // Fade out after 3 seconds
-            setTimeout(() => {
-                messageElement.style.opacity = '0'; // Fade out
-                messageElement.style.transform = 'translate(-50%, -50px)'; // Slide up
-            }, 3000); // Display for 3 seconds
+            const messageDiv = document.getElementById('welcome-message');
+            messageDiv.innerText = `Welcome, ${name}!`;
+            messageDiv.style.opacity = 1;
+            // Trigger confetti
+            confetti();
         }
-
-        // Simulate a welcome message update
-        showWelcomeMessage('John Doe'); // Change this to test different names
     </script>
 </body>
 </html>
