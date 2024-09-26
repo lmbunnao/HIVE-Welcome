@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #222;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+        h1 {
+            font-size: 50px;
+            text-align: center;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff6347, 0 0 20px #ff6347, 0 0 30px #ff6347;
+            }
+            to {
+                text-shadow: 0 0 20px #ff4500, 0 0 30px #ff4500, 0 0 40px #ff4500;
+            }
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="welcome-message">Welcome!</h1>
+    <canvas id="confettiCanvas" width="500" height="500"></canvas>
+
+    <script>
+        function randomColor() {
+            return 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.7)';
+        }
+
+        function drawConfetti() {
+            var canvas = document.getElementById('confettiCanvas');
+            var ctx = canvas.getContext('2d');
+            var x = Math.random() * canvas.width;
+            var y = Math.random() * canvas.height;
+            var size = Math.random() * 20 + 10;
+            ctx.fillStyle = randomColor();
+            ctx.fillRect(x, y, size, size);
+        }
+
+        function animateConfetti() {
+            var canvas = document.getElementById('confettiCanvas');
+            var ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (var i = 0; i < 100; i++) {
+                drawConfetti();
+            }
+            requestAnimationFrame(animateConfetti);
+        }
+
+        // Start the confetti animation
+        animateConfetti();
+
+        // Function to update the welcome message
+        function updateWelcomeMessage(name) {
+            document.getElementById('welcome-message').innerText = 'Welcome, ' + name + '!';
+        }
+
+        // Example usage: updateWelcomeMessage('John Doe');
+    </script>
+</body>
+</html>
