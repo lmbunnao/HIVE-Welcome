@@ -47,5 +47,43 @@
 
         function drawConfetti() {
             var canvas = document.getElementById('confettiCanvas');
-            v
+            var ctx = canvas.getContext('2d');
+            var x = Math.random() * canvas.width;
+            var y = Math.random() * canvas.height;
+            var size = Math.random() * 20 + 10;
+            ctx.fillStyle = randomColor();
+            ctx.fillRect(x, y, size, size);
         }
+
+        function animateConfetti() {
+            var canvas = document.getElementById('confettiCanvas');
+            var ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (var i = 0; i < 100; i++) {
+                drawConfetti();
+            }
+            requestAnimationFrame(animateConfetti);
+        }
+
+        // Start the confetti animation
+        animateConfetti();
+
+        // Function to update the welcome message with animation
+        function showWelcomeMessage(name) {
+            var messageElement = document.getElementById('welcome-message');
+            messageElement.innerText = 'Welcome, ' + name + '!';
+            messageElement.style.opacity = '1'; // Fade in
+            messageElement.style.transform = 'translate(-50%, 0)'; // Slide in from the top
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                messageElement.style.opacity = '0'; // Fade out
+                messageElement.style.transform = 'translate(-50%, -50px)'; // Slide up
+            }, 3000); // Display for 3 seconds
+        }
+
+        // Simulate a welcome message update
+        showWelcomeMessage('John Doe'); // Change this to test different names
+    </script>
+</body>
+</html>
